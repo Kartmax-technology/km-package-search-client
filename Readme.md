@@ -11,9 +11,9 @@ A npm package for Kartmax Search integration.
 - Emits response from component to your component for further action
 
 # Screenshot
-![Imgur](https://i.imgur.com/38iBJNU.gif)
+![Kartmax Search Client](https://i.imgur.com/38iBJNU.gif)
 
-![Imgur](https://i.imgur.com/38iBJNU.gif)
+![Kartmax Search Client](https://i.imgur.com/38iBJNU.gif)
 
 # Installation
 
