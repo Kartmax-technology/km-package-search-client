@@ -1,6 +1,6 @@
 # Kartmax Search Client
 
-A npm package for Kartmax Search integration.
+A npm package for Kartmax Search integration. This package should be used to communicate with Kartmax Search from front-end with the basic setup and standards already defined in this package.
 
 ## Under the hood (Features)
 
@@ -27,6 +27,7 @@ Run `npm i kartmax-search-client` into your app.
 ## Dependencies
 
 - [vue-debounce](https://www.npmjs.com/package/vue-debounce)
+- [Vue 2](https://www.npmjs.com/package/vue)
 
 # Usage
 ```
@@ -99,6 +100,29 @@ List of all the methods that you can use to send logs to our tool
 | :id="'search-input'" | Allows you to attach any id to input for designing      |    False |
 | :placeholder="'Feel free to search'" | Allows you to assign any placeholder to input     |    False |
 
+# Nuxt - SSR Usage
+
+To make sure this runs on server side, you need to create your build with the following command:
+```
+nuxt build --standalone
+```
+
+You can add the command in your `scripts` section in the package.json file like this :
+
+```
+"scripts": {
+    "build": "nuxt build --standalone",
+  },
+```
+
+### Why is this needed?
+
+* Nuxt doesn't build dependencies that are required on the server side. The default way to do so is to pass node_modules to the server side.
+* Passing node_modules to the server side is not a good practice.
+* Running the build command above will build the dependencies on the server side. This make it possible to bundle all the dependencies into the final artifact for the server side part.
+* You can read more about it here:
+    * https://stackoverflow.com/questions/50700680/nuxt-start-requires-node-modules-to-be-present-in-order-to-run
+    * https://github.com/nuxt/nuxt.js/issues/4292
 
 # Author
 
