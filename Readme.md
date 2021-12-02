@@ -11,7 +11,12 @@ A npm package for Kartmax Search integration.
 - Emits response from component to your component for further action
 
 # Screenshot
+
+### Generic Search with Validations
+
 ![Kartmax Search Client](https://i.imgur.com/YMb5RR2.gif)
+
+### Search with inbuilt debounce
 
 ![Kartmax Search](https://i.imgur.com/mdamKcX.gif)
 
