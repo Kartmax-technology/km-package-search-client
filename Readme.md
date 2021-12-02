@@ -27,13 +27,12 @@ Run `npm i kartmax-search-client` into your app.
 ## Dependencies
 
 - [vue-debounce](https://www.npmjs.com/package/vue-debounce)
-- [axios](https://www.npmjs.com/package/axios)
 
 # Usage
 ```
 <script>
 import Vue from 'vue';
-import SearchClient from '@/kartmax-search-client.vue';
+import SearchClient from 'kartmax-search-client';
 
 export default Vue.extend({
   components: {

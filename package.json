@@ -26,7 +26,6 @@
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
   },
   "dependencies": {
-    "axios": "^0.24.0",
     "vue-debounce": "^3.0.1"
   },
   "devDependencies": {

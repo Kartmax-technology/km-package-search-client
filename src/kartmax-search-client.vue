@@ -1,5 +1,4 @@
 <script>
-import axios from 'axios';
 import Vue from "vue";
 import vueDebounce from 'vue-debounce';
 import { getDirective } from 'vue-debounce'
@@ -51,58 +50,75 @@ export default {
       }
 
       //Preparing requests & calculating response time
-      const searchOpts = this.getOptions();
-      const start = Date.now(); //start time
-      let searchResp = await axios(searchOpts); //search request
-      const totalTimeTaken = Date.now() - start; //end time
-      let response = await searchResp.data; //response
-      console.log("Search Response emitted");
-      this.$emit('receiveResponse', response); //emit for response handling
-
-      //catching response and working on it
-      if (response) {
-        // sending data to the kartmax search analytics
-        response.responseTime = totalTimeTaken
-        this.saveAnalytics(response);
-      }else{
-        console.error("No response received from search service");
+      try{
+        const searchOpts = this.getOptions();
+        const start = Date.now(); //start time
+        let searchResp = await fetch(searchOpts.url, searchOpts.options).then(response => {
+          return response.json();
+        }).then(data => {
+          //search request
+          const totalTimeTaken = Date.now() - start; //end time
+          // Work with JSON data here
+          console.log("Search Response emitted");
+          ///console.log(data.query);
+          this.$emit('receiveResponse', data); //emit for response handling
+          //catching response and working on it
+          if (data.success) {
+            // sending data to the kartmax search analytics
+            //console.log("Received response time",data.responseTime);
+            //console.log("Computed response time", totalTimeTaken);
+            data.responseTime = totalTimeTaken;
+            this.saveAnalytics(data);
+          } else {
+            console.error("No response received from search service");
+          }
+        }).catch(err => {
+          console.error("Something went wrong while making the fetch data call.");
+          console.log(err)
+        });
+      }catch (e) {
+        console.error("Something went wrong while making the search call.");
+        console.log(e.stackTrace)
       }
     },
     saveAnalytics(response) {
       let searchAnalytics = {
-        queryData: response.query,
-        responseData: {
-          responseTime: response.responseTime,
-          totalHits: response.totalHits,
-          uniqueId: response.uniqueId,
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         },
-        collection: this.form.collection,
+        body : JSON.stringify({
+          queryData: response.query,
+          responseData: {
+            responseTime: response.responseTime,
+            totalHits: response.totalHits,
+            uniqueId: response.uniqueId
+          },
+          collection: this.form.collection
+        })
       };
-      if (response.response.success === 1) {
-        axios
-            .post(
-                `https://search.kartmax.in/api/`+this.options.app_id+`/search/v1/analytics-record-plp`,
-                searchAnalytics
-            )
-            .then((res) => {
-              console.log("Kartmax Search Analytics was saved");
-            })
-            .catch((err) => {
-              console.error("Kartmax Search Analytics not saved");
-            });
-      }else{
-        console.log("Kartmax Search Analytics not saved");
+
+      if (response.success) {
+        fetch(`https://search.kartmax.in/api/` + this.options.app_id + `/search/v1/analytics-record-plp`, searchAnalytics).then(res => {
+          console.log('%c Kartmax Search Analytics was saved', 'background: #222; color: #bada55');
+        }).catch(err => {
+          console.error("Kartmax Search Analytics not saved");
+        });
+      } else {
+        console.error("Kartmax Search Analytics not saved");
       }
     },
     getOptions() {
       return {
-        method: "GET",
-        url: `https://ai.kartmax.in/api/` + this.options.app_id + `/search-get/v1/plp-special`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        params: this.form,
-      };
+        url: `https://ai.kartmax.in/api/` + this.options.app_id + `/search-get/v1/plp-special?`+new URLSearchParams(this.form).toString(),
+        options:{
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method: "GET",
+        }
+      }
     }
   },
 };
