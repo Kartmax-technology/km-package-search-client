@@ -1,6 +1,6 @@
 {
   "name": "kartmax-search-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A npm package for Kartmax Search integration.",
   "author": "Kartmax",
   "contributors": ["Sagar Chauhan <coolsagar005@gmail.com> (https://github.com/sagarchauhan005)"],
