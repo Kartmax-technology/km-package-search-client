@@ -100,7 +100,7 @@ List of all the methods that you can use to send logs to our tool
 
 [KartMax](https://www.kartmax.in) is developed by GreenHonchos, one of India’s largest 360-degree eCommerce Service Providers & Consultants. From startup brands who need a one-stop-shop cart to large enterprises of international repute looking for scale – GreenHonchos provides a one-stop solution by advising across services, such as Technology, Marketing, Operations & Marketplace Management.
 
-## Contributor & Primary Developer
+## Contributor
 
 [Sagar Chauhan](https://github.com/sagarchauhan005)
 
