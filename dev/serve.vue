@@ -12,6 +12,7 @@ export default Vue.extend({
        * You can use this response to do whatever you want.
        * Such as hide and show the search results or loader
        * */
+       console.log("Search emitted response received");
         console.log(response);
         this.response = response;
     }
@@ -20,11 +21,11 @@ export default Vue.extend({
     return {
       response: '',
       options:{
-        app_id: 'r9phKuPML3NTZSCiiINdELAkP8hzxjZkqUPiI6FG',
+        app_id: '<your-app-id>',
         emptyInputError: true,
       },
       form:{
-        collection : "K50qtol4isMqmdFjz6xnWCFz5oAc3s",
+        collection : "<your-collection-id>",
         page :1,
         count : 12,
       }
@@ -41,24 +42,23 @@ export default Vue.extend({
         <div class="col-12 col-md-10 col-lg-8">
           <form>
             <div class="card-body row no-gutters align-items-center">
-              <div class="col-auto">
-                <i class="fas fa-search h4 text-body"></i>
-              </div>
               <!--end of col-->
               <div class="col">
+
+
                 <SearchClient
                     :placeholder="'Feel free to search'"
-                    :class="'form-control form-control-lg form-control-borderless'"
+                    :class="'form-control form-control form-control-borderless'"
                     :form="form"
                     :options="options"
                     v-on:receiveResponse="receiveResponse"
                     v-model="response"
-                >
-                </SearchClient>
+                ></SearchClient>
+
               </div>
               <!--end of col-->
               <div class="col-auto">
-                <button class="btn btn-lg btn-success" type="submit">Search</button>
+                <button class="btn btn btn-success" type="submit">Search</button>
               </div>
               <!--end of col-->
             </div>

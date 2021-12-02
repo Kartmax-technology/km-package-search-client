@@ -56,6 +56,7 @@ export default {
       let searchResp = await axios(searchOpts); //search request
       const totalTimeTaken = Date.now() - start; //end time
       let response = await searchResp.data; //response
+      console.log("Search Response emitted");
       this.$emit('receiveResponse', response); //emit for response handling
 
       //catching response and working on it
