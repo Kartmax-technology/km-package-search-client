@@ -21,16 +21,17 @@ export default Vue.extend({
     return {
       response: '',
       options:{
-        app_id: '<your-app-id>',
+        app_id: 'vwxhKzN1XsHCmZwNeBNy57pwOVFsXPHhRyJ0ApsB',
         emptyInputError: true,
+        useDebounce: true,
       },
       form:{
-        collection : "<your-collection-id>",
+        collection : "D3e2Zda3QWlDUObs0M2YEFyPUM2VRz",
         page :1,
         count : 12,
       }
     }
-  },
+  }
 });
 </script>
 
@@ -49,6 +50,7 @@ export default Vue.extend({
                 <SearchClient
                     :placeholder="'Feel free to search'"
                     :class="'form-control form-control form-control-borderless'"
+                    :id="'kartmax-search-client'"
                     :form="form"
                     :options="options"
                     v-on:receiveResponse="receiveResponse"

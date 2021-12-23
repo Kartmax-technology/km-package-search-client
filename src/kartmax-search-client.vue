@@ -2,6 +2,7 @@
 import Vue from "vue";
 import vueDebounce from 'vue-debounce';
 import { getDirective } from 'vue-debounce'
+
 Vue.use(vueDebounce);
 
 export default {
@@ -40,11 +41,19 @@ export default {
     },
     async onSearch() {
       this.form.query = this.query;
+      this.$emit('receiveResponse', {
+        success: true,
+        message: 'Input query received',
+        type:"input-query",
+        response : this.query
+      });
+
       let validate = this.validateData(this.form);
       if (!validate.status) {
         this.$emit('receiveResponse', {
           success: false,
-          message: 'The following values are mandatory :'+validate.fields
+          message: 'The following values are mandatory :'+validate.fields,
+          type: 'error'
         });
         return;
       }
@@ -61,7 +70,12 @@ export default {
           // Work with JSON data here
           console.log("Search Response emitted");
           ///console.log(data.query);
-          this.$emit('receiveResponse', data); //emit for response handling
+          this.$emit('receiveResponse', {
+            success: true,
+            message: 'Search response received',
+            type:"search-results",
+            response : data
+          }); //emit for response handling
           //catching response and working on it
           if (data.success) {
             // sending data to the kartmax search analytics
@@ -124,5 +138,6 @@ export default {
 };
 </script>
 <template>
-  <input type="text" v-model="query" v-debounce="onSearch" placeholder="Search"/>
+  <input v-if="this.options.useDebounce" type="text" v-model="query" v-debounce="onSearch" placeholder="Search"/>
+  <input v-else type="text" v-model="query" placeholder="Search without debounce" v-on:keyup="onSearch"/>
 </template>
