@@ -1,66 +1,87 @@
 <script>
-import Vue from 'vue';
-import SearchClient from '@/kartmax-search-client.vue';
+import Vue from "vue";
+import SearchClient from "@/kartmax-search-client.vue";
+let scroll = 200;
 
 export default Vue.extend({
   components: {
-    SearchClient
+    SearchClient,
   },
-  methods : {
-     receiveResponse(response) {
-       /*
+
+  beforeMount() {
+    
+    let compdata = this;
+    window.addEventListener(
+      "scroll",
+      function (event) {
+        var top = this.scrollY;
+        if (top > scroll) {
+          scroll = scroll + compdata.options.scrollDifference;
+          compdata.infScroll = top;
+        }
+      },
+      false
+    );
+  },
+  methods: {
+    receiveResponse(response) {
+      /*
        * You can use this response to do whatever you want.
        * Such as hide and show the search results or loader
        * */
-       console.log("Search emitted response received");
-        console.log(response);
-        this.response = response;
-    }
+      console.log("Search emitted response received");
+      console.log(response);
+      this.response = response;
+    },
   },
   data() {
     return {
-      response: '',
-      options:{
-        app_id: 'vwxhKzN1XsHCmZwNeBNy57pwOVFsXPHhRyJ0ApsB',
+      infScroll: "",
+      response: "",
+      options: {
+        app_id: "vwxhKzN1XsHCmZwNeBNy57pwOVFsXPHhRyJ0ApsB",
         emptyInputError: true,
         useDebounce: true,
+        scrollDifference:200,
+        pageurl:'search'
       },
-      form:{
-        collection : "D3e2Zda3QWlDUObs0M2YEFyPUM2VRz",
-        page :1,
-        count : 12,
-      }
-    }
-  }
+      form: {
+        collection: "D3e2Zda3QWlDUObs0M2YEFyPUM2VRz",
+        page: 1,
+        count: 12,
+      },
+      busy: false,
+    };
+  },
 });
 </script>
 
 <template>
   <div id="app">
     <div class="container">
-      <br/>
+      <br />
       <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8">
           <form>
             <div class="card-body row no-gutters align-items-center">
               <!--end of col-->
               <div class="col">
-
-
                 <SearchClient
-                    :placeholder="'Feel free to search'"
-                    :class="'form-control form-control form-control-borderless'"
-                    :id="'kartmax-search-client'"
-                    :form="form"
-                    :options="options"
-                    v-on:receiveResponse="receiveResponse"
-                    v-model="response"
+                  :placeholder="'Feel free to search'"
+                  :class="'form-control form-control form-control-borderless'"
+                  :id="'kartmax-search-client'"
+                  :form="form"
+                  :infscroll="infScroll"
+                  :options="options"
+                  v-on:receiveResponse="receiveResponse"
+                  v-model="response"
                 ></SearchClient>
-
               </div>
               <!--end of col-->
               <div class="col-auto">
-                <button class="btn btn btn-success" type="submit">Search</button>
+                <button class="btn btn btn-success" type="submit">
+                  Search
+                </button>
               </div>
               <!--end of col-->
             </div>
@@ -68,7 +89,7 @@ export default Vue.extend({
 
           <div class="card card-sm mt-2 p-2" v-if="response">
             <pre>
-                {{this.response}}
+                {{ this.response }}
             </pre>
           </div>
         </div>

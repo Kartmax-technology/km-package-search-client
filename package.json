@@ -3,7 +3,9 @@
   "version": "0.0.3",
   "description": "A npm package for Kartmax Search integration.",
   "author": "Kartmax",
-  "contributors": ["Sagar Chauhan <coolsagar005@gmail.com> (https://github.com/sagarchauhan005)"],
+  "contributors": [
+    "Sagar Chauhan <coolsagar005@gmail.com> (https://github.com/sagarchauhan005)"
+  ],
   "homepage": "https://github.com/Kartmax-technology/km-package-search-client/blob/master/Readme.md",
   "repository": {
     "url": "https://github.com/Kartmax-technology/km-package-search-client"
@@ -26,7 +28,7 @@
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
   },
   "dependencies": {
-    "vue-debounce": "^3.0.1"
+    "vue-debounce": "^3.0.1",
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
