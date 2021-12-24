@@ -82,9 +82,6 @@ export default {
         const start = Date.now(); //start time
         let searchResp = await fetch(searchOpts.url, searchOpts.options)
           .then(async (response) => {
-            let res= await response;
-         
-            // console.log("response.json()",response.json())
             return response.json();
           })
           .then((data) => {

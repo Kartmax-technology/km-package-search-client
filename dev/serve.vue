@@ -30,7 +30,6 @@ export default Vue.extend({
        * Such as hide and show the search results or loader
        * */
       console.log("Search emitted response received");
-      console.log(response);
       this.response = response;
     },
   },
