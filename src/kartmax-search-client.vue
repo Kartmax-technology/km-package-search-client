@@ -9,7 +9,8 @@ export default {
   data() {
     return {
       query: "",
-      scroll:1
+      scroll:1,
+      previousUrl:''
     };
   },
   directives: {
@@ -28,8 +29,23 @@ export default {
         }
       },
     },
+    query:{
+      handler: function (after, before) {
+        console.log("this.",this.query)
+        if(this.query == ''){
+          window.location.href = this.previousUrl
+        }else{
+          window.history.replaceState(null, null, `search?q=${this.query}`);
+        }
+        // this.scroll = this.scroll + 1;
+        // if(this.scroll <this.pageUpto){
+        //   this.onSearch();
+        // }
+      },
+    }
   },
   beforeMount(){
+    console.log("in nmountes11111",this.query)
      if(window.location.href.indexOf(`${this.options.pageurl}`)==-1){
        this.query = ''
      }
@@ -172,22 +188,46 @@ export default {
         },
       };
     },
+    onFocus(e){
+      this.previousUrl = window.location.href;
+    },
   },
 };
 </script>
 <template>
+<div>
   <input
     v-if="this.options.useDebounce"
     type="text"
     v-model="query"
     v-debounce="onSearch"
+    @focus="onFocus"
     placeholder="Search"
+    class="w-100 border-0 searc-input"
   />
   <input
-    v-else
+    v-else-if="this.options.useKeyUp"
     type="text"
     v-model="query"
     placeholder="Search without debounce"
     v-on:keyup="onSearch"
+    @focus="onFocus"
+    class="w-100 border-0 searc-input"
+
   />
+    <input
+    v-else
+    type="text"
+    v-model="query"
+    placeholder="Search"
+    @focus="onFocus"
+    class="w-100 border-0 searc-input"
+
+  />
+  </div>
 </template>
+<style scoped>
+.searc-input{
+  outline: none;
+}
+</style>

@@ -32,6 +32,10 @@ export default Vue.extend({
       console.log("Search emitted response received");
       this.response = response;
     },
+    onEnter(){
+      console.log("enter in enter event")
+      this.$emit('onSearch')
+    },
   },
   data() {
     return {
@@ -41,6 +45,7 @@ export default Vue.extend({
         app_id: "vwxhKzN1XsHCmZwNeBNy57pwOVFsXPHhRyJ0ApsB",
         emptyInputError: true,
         useDebounce: true,
+        useKeyUp: false,
         scrollDifference:200,
         pageurl:'search'
       },
@@ -67,18 +72,19 @@ export default Vue.extend({
               <div class="col">
                 <SearchClient
                   :placeholder="'Feel free to search'"
-                  :class="'form-control form-control form-control-borderless'"
+                  :class="'form-control form-control form-control-borderless '"
                   :id="'kartmax-search-client'"
                   :form="form"
                   :infscroll="infScroll"
                   :options="options"
                   v-on:receiveResponse="receiveResponse"
                   v-model="response"
+                  ref="child"
                 ></SearchClient>
               </div>
               <!--end of col-->
               <div class="col-auto">
-                <button class="btn btn btn-success" type="submit">
+                <button class="btn btn btn-success" type="submit" @click.prevent="$refs.child.onSearch">
                   Search
                 </button>
               </div>
