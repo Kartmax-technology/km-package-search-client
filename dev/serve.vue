@@ -33,7 +33,7 @@ export default Vue.extend({
       this.response = response;
     },
     onEnter(){
-      console.log("enter in enter event")
+     
       this.$emit('onSearch')
     },
   },

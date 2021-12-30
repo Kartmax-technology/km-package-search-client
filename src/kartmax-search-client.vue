@@ -45,7 +45,6 @@ export default {
     }
   },
   beforeMount(){
-    console.log("in nmountes11111",this.query)
      if(window.location.href.indexOf(`${this.options.pageurl}`)==-1){
        this.query = ''
      }
